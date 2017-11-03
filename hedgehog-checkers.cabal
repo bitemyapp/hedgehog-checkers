@@ -22,9 +22,9 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base
+      base >=4.7 && <5
     , containers
-    , hedgehog
+    , hedgehog >=0.5
     , semigroupoids
   exposed-modules:
       Hedgehog.Checkers
