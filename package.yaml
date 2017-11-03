@@ -6,7 +6,7 @@ author:              Chris Allen
 maintainer:          cma@bitemyapp.com
 copyright:           2017, Chris Allen
 category:            Web
-description:         Hedgehog checkers wraps up the expected properties associated with various standard type classes as Hedgehog properties.
+description:         hedgehog-checkers wraps up the expected properties associated with various standard type classes as Hedgehog properties.
 extra-source-files:
 - README.md
 
