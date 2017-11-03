@@ -53,6 +53,17 @@ eitherSemigroup :: Property
 eitherSemigroup = property $ do
   semigroup genEither
 
+genMaybe' :: Gen a -> Gen (Maybe a)
+genMaybe' ga = do
+  a <- ga
+  -- I need to bias this to Just
+  Gen.choice [return $ Nothing, return $ Just a]
+genMaybe = genMaybe' (Sum <$> genInt)
+
+maybeMonoid :: Property
+maybeMonoid = property $ do
+  monoid genMaybe
+
 main :: IO ()
 main = do
   void $
@@ -63,3 +74,7 @@ main = do
                           , ("Semigroup", eitherSemigroup)
                           , ("Applicative", eitherApplicative)
                           ]
+  void $
+    checkParallel $
+      Group "Data.Maybe" [ ("Monoid", maybeMonoid)
+                         ]

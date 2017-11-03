@@ -190,6 +190,11 @@ monoid gen = do
   semigroup gen
   identity mappend mempty gen
   associativity mappend gen
+  monoidSemigroupSame
+  where monoidSemigroupSame = do
+          a <- forAll gen
+          b <- forAll gen
+          mappend a b === a <> b
 
 applicative :: forall f a b c
              . ( Applicative f
