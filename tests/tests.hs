@@ -25,12 +25,16 @@ validationAlternative = property $ do
       genVal = genValidation genSumInt genSumInt
   alternative genVal
 
+genInt :: Gen Int
 genInt = Gen.int (Range.linear 0 maxBound)
+
 genEither' :: Gen a -> Gen b -> Gen (Either a b)
 genEither' ga gb = do
   a <- ga
   b <- gb
   Gen.choice [return $ Left a, return $ Right b]
+
+genEither :: Gen (Either Int Int)
 genEither = genEither' genInt genInt
 
 eitherAlt :: Property
@@ -42,7 +46,7 @@ eitherBifunctor = property $ do
   bifunctor genEither genInt genInt genInt
 
 eitherFunctor :: Property
-eitherFunctor = property $ do      
+eitherFunctor = property $ do
   functor genEither
 
 eitherApplicative :: Property
@@ -58,6 +62,8 @@ genMaybe' ga = do
   a <- ga
   -- I need to bias this to Just
   Gen.choice [return $ Nothing, return $ Just a]
+
+genMaybe :: Gen (Maybe (Sum Int))
 genMaybe = genMaybe' (Sum <$> genInt)
 
 maybeMonoid :: Property
