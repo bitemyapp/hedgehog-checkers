@@ -1,0 +1,38 @@
+name:                hedgehog-checkers
+version:             0.1.0.0
+homepage:            https://github.com/bitemyapp/hedgehog-checkers#readme
+license:             BSD3
+author:              Chris Allen
+maintainer:          cma@bitemyapp.com
+copyright:           2017, Chris Allen
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  dependencies:
+    - base
+    - containers
+    - hedgehog
+    - semigroupoids
+  exposed-modules:
+    - Hedgehog.Checkers
+
+tests:
+  tests:
+    main: tests.hs
+    source-dirs: tests
+    dependencies:
+      - base
+      - hedgehog
+      - hedgehog-checkers
+      - either
+    ghc-options:
+      - -threaded
+      - -Wall
+      - -rtsopts
+      - -with-rtsopts=-N
