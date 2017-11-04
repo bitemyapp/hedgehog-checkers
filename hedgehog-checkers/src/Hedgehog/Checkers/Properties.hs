@@ -57,3 +57,17 @@ commutativity f gena = do
   a <- forAll gena
   a' <- forAll gena
   f a a' === f a' a
+
+-- totalOrder :: (Ord a, Show a)
+--            => Gen a -> PropertyT IO ()
+-- totalOrder gena = do
+--   a <- forAll gena
+--   a' <- forAll gena
+
+-- need classify and cover
+-- isTotalOrder :: (Arbitrary a,Show a,Ord a) => a -> a -> Property
+-- isTotalOrder x y =
+--     classify (x > y)  "less than" $
+--     classify (x == y) "equals" $
+--     classify (x < y)  "greater than" $
+--     x < y || x == y || x > y
