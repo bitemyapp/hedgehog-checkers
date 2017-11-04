@@ -18,7 +18,7 @@ library:
   dependencies:
     - lens
   exposed-modules:
-    - Hedgehog.Checkers.Lens
+    - Hedgehog.Checkers.Lens.Properties
 
 tests:
   tests:

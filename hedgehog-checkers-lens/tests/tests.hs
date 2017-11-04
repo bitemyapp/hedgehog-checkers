@@ -12,7 +12,7 @@ import Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
-import Hedgehog.Checkers.Lens
+import Hedgehog.Checkers.Lens.Properties
 
 data Foo =
   Foo
@@ -36,36 +36,18 @@ genFoo =
       int = Gen.int (Range.linear 0 100)
   in genFoo' int string
 
-viewOfSet :: Property
-viewOfSet = property $ do
+allLensLawsFoo :: Property
+allLensLawsFoo = property $ do
   let string = Gen.string (Range.linear 0 100) Gen.ascii
       int = Gen.int (Range.linear 0 100)
-  viewOfSetIdentity bar int genFoo
-  viewOfSetIdentity baz int genFoo
-  viewOfSetIdentity dunno string genFoo
-
-setOfView :: Property
-setOfView = property $ do
-  setOfViewIdentity bar genFoo
-  setOfViewIdentity baz genFoo
-  setOfViewIdentity dunno genFoo
-
-doubleSet :: Property
-doubleSet = property $ do
-  let string = Gen.string (Range.linear 0 100) Gen.ascii
-      int = Gen.int (Range.linear 0 100)
-  doubleSetIdentity bar int genFoo
-  doubleSetIdentity baz int genFoo
-  doubleSetIdentity dunno string genFoo
+  isLens bar int genFoo
+  isLens baz int genFoo
+  isLens dunno string genFoo
 
 main :: IO ()
 main = do
   void $
     checkParallel $
-      Group "Control.Lens.Lens" [ ("view l (set l v s)  ≡ v"
-                                  , viewOfSet)
-                                , ("set l (view l s) s  ≡ s"
-                                  , setOfView)
-                                , ("set l v' (set l v s) ≡ set l v' s"
-                                  , doubleSet)
+      Group "Control.Lens.Lens" [ ("all laws applied to foo's lenses"
+                                  , allLensLawsFoo)
                                 ]

@@ -199,12 +199,11 @@ applicative gen gena genb genc = do
 -- Bifunctor Validation
 -- Semigroup e => Semigroup (Validation e a)	 
 -- Monoid e => Monoid (Validation e a)Source
-
 -- Semigroup e => Applicative (Validation e)	 
 
 -- Traversable (Validation e)
 -- Bitraversable Validation	 
 
+-- (Ord a, Ord e) => Ord (Validation e a)
 -- (Eq a, Eq e) => Eq (Validation e a)	 
--- (Ord a, Ord e) => Ord (Validation e a)	 
 -- (Show a, Show e) => Show (Validation e a)	 
