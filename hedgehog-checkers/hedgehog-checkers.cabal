@@ -29,6 +29,9 @@ library
   exposed-modules:
       Hedgehog.Checkers
   other-modules:
+      Hedgehog.Checkers.Classes
+      Hedgehog.Checkers.Properties
+      Hedgehog.Checkers.Ugly.Function.Hack
       Paths_hedgehog_checkers
   default-language: Haskell2010
 

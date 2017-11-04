@@ -1,12 +1,10 @@
 name:                hedgehog-checkers-lens
 version:             0.1.0.0
-#synopsis:
-#description:
-homepage:            https://github.com/githubuser/hedgehog-checkers-lens#readme
+homepage: https://github.com/bitemyapp/hedgehog-checkers#readme
 license:             BSD3
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2017 Author name here
+author:              Chris Allen
+maintainer:          cma@bitemyapp.com
+copyright:           2017, Chris Allen
 category:            Web
 extra-source-files:
 - README.md
@@ -14,7 +12,26 @@ extra-source-files:
 dependencies:
   - base >= 4.7 && < 5
 
-executables:
-  hedgehog-checkers-lens:
-    source-dirs:      src
-    main:             Main.hs
+library:
+  source-dirs: src
+  dependencies:
+    - base
+    - hedgehog
+    - lens
+  exposed-modules:
+    - Hedgehog.Checkers.Lens
+
+tests:
+  tests:
+    main: tests.hs
+    source-dirs: tests
+    dependencies:
+      - base
+      - hedgehog
+      - hedgehog-checkers
+      - either
+    ghc-options:
+      - -threaded
+      - -Wall
+      - -rtsopts
+      - -with-rtsopts=-N
