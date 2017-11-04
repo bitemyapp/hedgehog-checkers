@@ -1,3 +1,7 @@
+-- This file has been generated from package.yaml by hpack version 0.18.1.
+--
+-- see: https://github.com/sol/hpack
+
 name:           hedgehog-checkers-lens
 version:        0.1.0.0
 category:       Web
@@ -36,6 +40,7 @@ test-suite tests
   build-depends:
       base >= 4.7 && < 5
     , hedgehog >= 0.5
+    , hedgehog-checkers
     , hedgehog-checkers-lens
     , lens
   default-language: Haskell2010
