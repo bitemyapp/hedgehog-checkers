@@ -48,3 +48,12 @@ associativity f gen = do
   y <- forAll gen
   z <- forAll gen
   f x (f y z) === f (f x y) z
+
+commutativity :: (Eq b, Show a, Show b)
+              => (a -> a -> b)
+              -> Gen a
+              -> PropertyT IO ()
+commutativity f gena = do
+  a <- forAll gena
+  a' <- forAll gena
+  f a a' === f a' a
