@@ -12,6 +12,8 @@ import Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
+import Hedgehog.Checkers.Ugly.Function.Hack
+
 import Hedgehog.Checkers.Lens.Properties
 
 data Foo =

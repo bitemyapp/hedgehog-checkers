@@ -1,4 +1,4 @@
--- This file has been generated from package.yaml by hpack version 0.19.3.
+-- This file has been generated from package.yaml by hpack version 0.18.1.
 --
 -- see: https://github.com/sol/hpack
 
@@ -13,7 +13,7 @@ license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
 cabal-version:  >= 1.10
-description:    Hedgehog checkers wraps up the expected properties associated with various standard type classes as Hedgehog properties.
+description:    hedgehog-checkers wraps up the expected properties associated with various standard type classes as Hedgehog properties.
 
 extra-source-files:
     README.md
@@ -22,16 +22,16 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      base >= 4.7 && < 5
+    , hedgehog >= 0.5
     , containers
-    , hedgehog >=0.5
     , semigroupoids
   exposed-modules:
       Hedgehog.Checkers
+      Hedgehog.Checkers.Ugly.Function.Hack
   other-modules:
       Hedgehog.Checkers.Classes
       Hedgehog.Checkers.Properties
-      Hedgehog.Checkers.Ugly.Function.Hack
       Paths_hedgehog_checkers
   default-language: Haskell2010
 
@@ -42,10 +42,8 @@ test-suite tests
       tests
   ghc-options: -threaded -Wall -rtsopts -with-rtsopts=-N
   build-depends:
-      base
-    , either
-    , hedgehog
+      base >= 4.7 && < 5
+    , hedgehog >= 0.5
     , hedgehog-checkers
-  other-modules:
-      Paths_hedgehog_checkers
+    , either
   default-language: Haskell2010

@@ -27,9 +27,15 @@ ordFuncWtf'' range gen gen' = do
 ordFuncWtf' :: Ord a => Gen a -> Gen b -> Gen (a -> b)
 ordFuncWtf' = ordFuncWtf'' (Range.linear 0 1000)
 
+funcForAllWtf :: Monad m => Gen a -> PropertyT m a
+funcForAllWtf g = do
+  let funcShow _ = "<func>"
+  forAllWith funcShow $ g
+
 ordFuncWtf :: (Ord a, Monad m) => Gen a -> Gen b -> PropertyT m (a -> b)
 ordFuncWtf gena genb = do
-  let funcShow _ = "<func>"
-  forAllWith funcShow $ ordFuncWtf' gena genb
+  -- let funcShow _ = "<func>"
+  -- forAllWith funcShow $ ordFuncWtf' gena genb
+  funcForAllWtf $ ordFuncWtf' gena genb
 
 ---------- ^^^^^ CANCER PLEASE IGNORE ^^^^^  -----------------------------

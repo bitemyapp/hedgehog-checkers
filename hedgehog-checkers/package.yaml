@@ -21,6 +21,7 @@ library:
     - semigroupoids
   exposed-modules:
     - Hedgehog.Checkers
+    - Hedgehog.Checkers.Ugly.Function.Hack
 
 tests:
   tests:

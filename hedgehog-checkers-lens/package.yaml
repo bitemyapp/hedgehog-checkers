@@ -16,6 +16,7 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
+    - hedgehog-checkers
     - lens
   exposed-modules:
     - Hedgehog.Checkers.Lens.Properties
