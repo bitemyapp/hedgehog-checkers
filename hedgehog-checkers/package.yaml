@@ -12,13 +12,12 @@ extra-source-files:
 
 dependencies:
   - base >= 4.7 && < 5
+  - hedgehog >= 0.5
 
 library:
   source-dirs: src
   dependencies:
-    - base >= 4.7 && < 5
     - containers
-    - hedgehog >= 0.5
     - semigroupoids
   exposed-modules:
     - Hedgehog.Checkers
@@ -28,8 +27,6 @@ tests:
     main: tests.hs
     source-dirs: tests
     dependencies:
-      - base
-      - hedgehog
       - hedgehog-checkers
       - either
     ghc-options:

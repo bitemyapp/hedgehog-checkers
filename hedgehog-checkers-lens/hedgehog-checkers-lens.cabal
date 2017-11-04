@@ -5,10 +5,10 @@
 name:           hedgehog-checkers-lens
 version:        0.1.0.0
 category:       Web
-homepage:       https://github.com/githubuser/hedgehog-checkers-lens#readme
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2017 Author name here
+homepage:       https://github.com/bitemyapp/hedgehog-checkers#readme
+author:         Chris Allen
+maintainer:     cma@bitemyapp.com
+copyright:      2017, Chris Allen
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -17,12 +17,28 @@ cabal-version:  >= 1.10
 extra-source-files:
     README.md
 
-executable hedgehog-checkers-lens
-  main-is: Main.hs
+library
   hs-source-dirs:
       src
   build-depends:
       base >= 4.7 && < 5
-  other-modules:
+    , hedgehog >= 0.5
+    , lens
+  exposed-modules:
       Hedgehog.Checkers.Lens
+  other-modules:
+      Paths_hedgehog_checkers_lens
+  default-language: Haskell2010
+
+test-suite tests
+  type: exitcode-stdio-1.0
+  main-is: tests.hs
+  hs-source-dirs:
+      tests
+  ghc-options: -threaded -Wall -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >= 4.7 && < 5
+    , hedgehog >= 0.5
+    , hedgehog-checkers-lens
+    , lens
   default-language: Haskell2010
