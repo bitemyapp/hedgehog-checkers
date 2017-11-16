@@ -5,6 +5,7 @@ module Hedgehog.Checkers.Classes
   -- | Classes
     alt
   , alternative
+  , alternativeAltAgreement
   , bifunctor
   , functor
   , semigroup
@@ -49,6 +50,17 @@ alternative :: ( Alternative f
 alternative gen = do
   identity (<|>) empty gen
   associativity (<|>) gen
+
+alternativeAltAgreement :: ( Alt f
+                           , Alternative f
+                           , Eq (f a)
+                           , Show (f a)
+                           )
+                        => Gen (f a) -> PropertyT IO ()
+alternativeAltAgreement gen = do
+  fa <- forAll gen
+  fb <- forAll gen
+  (fa <!> fb) === (fa <|> fb)
 
 -- fmap (f . g)  ==  fmap f . fmap g
 -- ??? inferrable from: fmap id = id

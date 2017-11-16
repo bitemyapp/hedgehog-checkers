@@ -72,6 +72,15 @@ maybeMonoid :: Property
 maybeMonoid = property $ do
   monoid genMaybe
 
+maybeAlt :: Property
+maybeAlt = property $ alt genMaybe
+
+maybeAlternative :: Property
+maybeAlternative = property $ alternative genMaybe
+
+maybeAlternativeAlt :: Property
+maybeAlternativeAlt = property $ alternativeAltAgreement genMaybe
+
 main :: IO ()
 main = do
   e <-
@@ -85,5 +94,8 @@ main = do
   m <-
     checkParallel $
       Group "Data.Maybe" [ ("Monoid", maybeMonoid)
+                         , ("Alt", maybeAlt)
+                         , ("Alternative", maybeAlternative)
+                         , ("AlternativeAlt", maybeAlternativeAlt)
                          ]
   unless (and [e,m]) exitFailure
