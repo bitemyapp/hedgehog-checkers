@@ -3,9 +3,11 @@
 module Main where
 
 import           Control.Applicative
+import           Control.Monad
 import           Data.Either.Validation
 import           Data.Functor (void)
 import           Data.Monoid (Sum(..))
+import           System.Exit (exitFailure)
 
 import Hedgehog
 import qualified Hedgehog.Gen as Gen
@@ -72,7 +74,7 @@ maybeMonoid = property $ do
 
 main :: IO ()
 main = do
-  void $
+  e <-
     checkParallel $
       Group "Data.Either" [ ("Alt", eitherAlt)
                           , ("Bifunctor", eitherBifunctor)
@@ -80,7 +82,8 @@ main = do
                           , ("Semigroup", eitherSemigroup)
                           , ("Applicative", eitherApplicative)
                           ]
-  void $
+  m <-
     checkParallel $
       Group "Data.Maybe" [ ("Monoid", maybeMonoid)
                          ]
+  unless (and [e,m]) exitFailure
