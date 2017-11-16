@@ -11,13 +11,13 @@ extra-source-files:
 
 dependencies:
   - base >= 4.7 && < 5
-  - hedgehog >= 0.5
+  - hedgehog >= 0.5 && < 0.6
   - hedgehog-checkers
+  - lens >= 4 && < 5
 
 library:
   source-dirs: src
   dependencies:
-    - lens
   exposed-modules:
     - Hedgehog.Checkers.Lens.Properties
 
@@ -27,7 +27,6 @@ tests:
     source-dirs: tests
     dependencies:
       - hedgehog-checkers-lens
-      - lens
     ghc-options:
       - -threaded
       - -Wall
