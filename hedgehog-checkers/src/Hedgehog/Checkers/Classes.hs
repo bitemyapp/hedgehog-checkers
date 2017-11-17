@@ -1,4 +1,5 @@
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE RankNTypes #-}
 
 module Hedgehog.Checkers.Classes
   (
@@ -10,7 +11,9 @@ module Hedgehog.Checkers.Classes
   , functor
   , semigroup
   , monoid
+  , apply
   , applicative
+  , applicativeApplyAgreement
   ) where
 
 import           Control.Applicative
@@ -139,6 +142,45 @@ monoid gen = do
           b <- forAll gen
           mappend a b === a <> b
 
+apply :: forall f a b c
+       . ( Apply f
+         , Eq (f a)
+         , Eq (f b)
+         , Eq (f c)
+         , Ord a
+         , Ord b
+         , Show a
+         , Show b
+         , Show c
+         , Show (f a)
+         , Show (f b)
+         , Show (f c)
+         )
+      => Gen (f a)
+      -> Gen a
+      -> Gen b
+      -> Gen c
+      -> PropertyT IO ()
+apply gen gena genb genc = do
+  applyComposition
+  applyRight
+  applyLeft
+  where applyComposition = do
+          fa <- forAll gen
+          fbc <- liftedFunctionWtf gen genb genc
+          fab <- liftedFunctionWtf gen gena genb
+          ((.) <$> fbc <.> fab <.> fa) === (fbc <.> (fab <.> fa))
+        applyRight = do
+          fa <- forAll gen
+          fbc <- liftedFunctionWtf gen genb genc
+          ab <- ordFuncWtf gena genb
+          (fbc <.> (ab <$> fa)) === ((. ab) <$> fbc <.> fa)
+        applyLeft = do
+          fa <- forAll gen
+          fab <- liftedFunctionWtf gen gena genb
+          bc <- ordFuncWtf genb genc
+          (bc <$> (fab <.> fa)) === ((bc .) <$> fab <.> fa)
+
 applicative :: forall f a b c
              . ( Applicative f
                , Eq (f a)
@@ -168,10 +210,8 @@ applicative gen gena genb genc = do
 
         applicativeComposition = do
           fa <- forAll gen
-          fbc' <- ordFuncWtf genb genc
-          fbc <- fmap (const fbc') <$> forAll gen
-          fab' <- ordFuncWtf gena genb
-          fab <- fmap (const fab') <$> forAll gen
+          fbc <- liftedFunctionWtf gen genb genc
+          fab <- liftedFunctionWtf gen gena genb
           (pure (.) <*> fbc <*> fab <*> fa) === (fbc <*> (fab <*> fa))
 
         applicativeHomomorphism = do
@@ -183,15 +223,28 @@ applicative gen gena genb genc = do
 
         applicativeInterchange = do
           a <- forAll gena
-          fa <- forAll gen
-          fab' <- ordFuncWtf gena genb
-          fab <- fmap (const fab') <$> forAll gen
+          fab <- liftedFunctionWtf gen gena genb
           (fab <*> pure a) === (pure ($ a) <*> fab)
 
         applicativeFunctor = do
           fa <- forAll gen
           f <- ordFuncWtf gena genb
           fmap f fa === (pure f <*> fa)
+
+applicativeApplyAgreement :: ( Monad m
+                             , Apply f
+                             , Applicative f
+                             , Show b
+                             , Show (f a)
+                             , Show (f b)
+                             , Eq (f b)
+                             , Ord a
+                             )
+                          => Gen (f a) -> Gen a -> Gen b -> PropertyT m ()
+applicativeApplyAgreement gen gena genb = do
+  fa <- forAll gen
+  fab <- liftedFunctionWtf gen gena genb
+  (fab <.> fa) === (fab <*> fa)
 
 -- identityP     :: m a -> Property
 -- compositionP  :: m (b -> c) -> m (a -> b) -> m a -> Property

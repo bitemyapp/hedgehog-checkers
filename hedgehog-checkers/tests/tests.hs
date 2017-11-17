@@ -30,6 +30,9 @@ validationAlternative = property $ do
 genInt :: Gen Int
 genInt = Gen.int (Range.linear 0 maxBound)
 
+genSum :: Gen (Sum Int)
+genSum = Sum <$> genInt
+
 genEither' :: Gen a -> Gen b -> Gen (Either a b)
 genEither' ga gb = do
   a <- ga
@@ -51,6 +54,10 @@ eitherFunctor :: Property
 eitherFunctor = property $ do
   functor genEither
 
+eitherApply :: Property
+eitherApply = property $ do
+  apply genEither genInt genInt genInt
+
 eitherApplicative :: Property
 eitherApplicative = property $ do
   applicative genEither genInt genInt genInt
@@ -60,13 +67,12 @@ eitherSemigroup = property $ do
   semigroup genEither
 
 genMaybe' :: Gen a -> Gen (Maybe a)
-genMaybe' ga = do
-  a <- ga
+genMaybe' ga =
   -- I need to bias this to Just
-  Gen.choice [return $ Nothing, return $ Just a]
+  Gen.choice [return Nothing, Just <$> ga]
 
 genMaybe :: Gen (Maybe (Sum Int))
-genMaybe = genMaybe' (Sum <$> genInt)
+genMaybe = genMaybe' genSum
 
 maybeMonoid :: Property
 maybeMonoid = property $ do
@@ -81,6 +87,18 @@ maybeAlternative = property $ alternative genMaybe
 maybeAlternativeAlt :: Property
 maybeAlternativeAlt = property $ alternativeAltAgreement genMaybe
 
+maybeApply :: Property
+maybeApply = property $
+  apply genMaybe genSum genSum genSum
+
+maybeApplicative :: Property
+maybeApplicative = property $
+  applicative genMaybe genSum genSum genSum
+
+maybeApplicativeApply :: Property
+maybeApplicativeApply = property $
+  applicativeApplyAgreement genMaybe genSum genSum
+
 main :: IO ()
 main = do
   e <-
@@ -89,6 +107,7 @@ main = do
                           , ("Bifunctor", eitherBifunctor)
                           , ("Functor", eitherFunctor)
                           , ("Semigroup", eitherSemigroup)
+                          , ("Apply", eitherApply)
                           , ("Applicative", eitherApplicative)
                           ]
   m <-
@@ -97,5 +116,8 @@ main = do
                          , ("Alt", maybeAlt)
                          , ("Alternative", maybeAlternative)
                          , ("AlternativeAlt", maybeAlternativeAlt)
+                         , ("Apply", maybeApply)
+                         , ("Applicative", maybeApplicative)
+                         , ("ApplicativeApply", maybeApplicativeApply)
                          ]
   unless (and [e,m]) exitFailure
