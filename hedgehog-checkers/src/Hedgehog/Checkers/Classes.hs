@@ -169,9 +169,9 @@ applicative gen gena genb genc = do
         applicativeComposition = do
           fa <- forAll gen
           fbc' <- ordFuncWtf genb genc
-          let fbc = fmap (const fbc') fa
+          fbc <- fmap (const fbc') <$> forAll gen
           fab' <- ordFuncWtf gena genb
-          let fab = fmap (const fab') fa
+          fab <- fmap (const fab') <$> forAll gen
           (pure (.) <*> fbc <*> fab <*> fa) === (fbc <*> (fab <*> fa))
 
         applicativeHomomorphism = do
@@ -185,7 +185,7 @@ applicative gen gena genb genc = do
           a <- forAll gena
           fa <- forAll gen
           fab' <- ordFuncWtf gena genb
-          let fab = fmap (const fab') fa
+          fab <- fmap (const fab') <$> forAll gen
           (fab <*> pure a) === (pure ($ a) <*> fab)
 
         applicativeFunctor = do
