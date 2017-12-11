@@ -272,6 +272,7 @@ applicativeApplyAgreement gen gena genb = do
 ---- To be done
 -- Traversable (Validation e)
 -- Bitraversable Validation	 
+-- https://github.com/bitemyapp/hedgehog-checkers/issues/9
 
 -- (Eq a, Eq e) => Eq (Validation e a)	 
 -- (Show a, Show e) => Show (Validation e a)	 
