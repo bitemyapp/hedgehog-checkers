@@ -24,6 +24,16 @@ import qualified Hedgehog.Range as Range
 import Hedgehog.Checkers.Properties
 import Hedgehog.Checkers.Ugly.Function.Hack
 
+-- | Total ordering
+ord :: forall a. (Eq a, Ord a, Show a)
+    => (a -> Gen a) -> PropertyT IO ()
+ord gen = do
+  reflexive rel gen
+  transitive rel gen
+  antiSymmetric rel gen
+  where
+    rel = (<=)
+
 -- | <!> is associative:             (a <!> b) <!> c = a <!> (b <!> c)
 --   <$> left-distributes over <!>:  f <$> (a <!> b) = (f <$> a) <!> (f <$> b)
 alt :: ( Alt f

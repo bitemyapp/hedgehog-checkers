@@ -8,6 +8,11 @@ module Hedgehog.Checkers.Properties
   , leftIdentity
   , rightIdentity
   , associativity
+  , commutativity
+  , reflexive
+  , transitive
+  , symmetric
+  , antiSymmetric
   ) where
 
 import Hedgehog
@@ -58,16 +63,41 @@ commutativity f gena = do
   a' <- forAll gena
   f a a' === f a' a
 
--- totalOrder :: (Ord a, Show a)
---            => Gen a -> PropertyT IO ()
--- totalOrder gena = do
---   a <- forAll gena
---   a' <- forAll gena
+reflexive :: (Show a)
+          => (a -> a -> Bool)
+          -> Gen a
+          -> PropertyT IO ()
+reflexive rel gena = do
+  a <- forAll gena
+  assert $ rel a a
 
--- need classify and cover
--- isTotalOrder :: (Arbitrary a,Show a,Ord a) => a -> a -> Property
--- isTotalOrder x y =
---     classify (x > y)  "less than" $
---     classify (x == y) "equals" $
---     classify (x < y)  "greater than" $
---     x < y || x == y || x > y
+transitive :: (Show a)
+           => (a -> a -> Bool)
+           -> Gen a
+           -> (a -> Gen a)
+           -> PropertyT IO ()
+transitive rel gena genf = do
+  a <- forAll gena
+  b <- forAll (genf a)
+  c <- forAll (genf b)
+  (rel a b) && (rel b c) === (rel a c)
+
+symmetric :: (Show a)
+          => (a -> a -> Bool)
+          -> Gen a
+          -> (a -> Gen a)
+          -> PropertyT IO ()
+symmetric f gena genf = do
+  a <- forAll gena
+  b <- forAll (genf a)
+  (rel a b) === (rel b a)
+
+antiSymmetric :: (Eq a, Show a)
+              => (a -> a -> Bool)
+              -> Gen a
+              -> (a -> Gen a)
+              -> PropertyT IO ()
+antiSymmetric f gena genf = do
+  a <- forAll gena
+  b <- forAll (genf a)
+  (rel a b) && (rel b a) === (a == b)
