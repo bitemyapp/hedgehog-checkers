@@ -259,18 +259,7 @@ applicativeApplyAgreement gen gena genb = do
   fab <- liftedFunctionWtf gen gena genb
   (fab <.> fa) === (fab <*> fa)
 
--- identityP     :: m a -> Property
--- compositionP  :: m (b -> c) -> m (a -> b) -> m a -> Property
--- homomorphismP :: (a -> b) -> a -> Property
--- interchangeP  :: m (a -> b) -> a -> Property
--- functorP      :: (a -> b) -> m a -> Property
-
--- identityP v        = (pure id <*> v) =-= v
--- compositionP u v w = (pure (.) <*> u <*> v <*> w) =-= (u <*> (v <*> w))
--- homomorphismP f x  = (pure f <*> pure x) =-= (pure (f x) :: m b)
--- interchangeP u y   = (u <*> pure y) =-= (pure ($ y) <*> u)
--- functorP f x       = (fmap f x) =-= (pure f <*> x)
-
+---- Done
 -- (Semigroup e, Monoid e) => Alternative (Validation e)	 
 -- Alt (Validation e)	 
 -- Functor (Validation e)
@@ -278,10 +267,11 @@ applicativeApplyAgreement gen gena genb = do
 -- Semigroup e => Semigroup (Validation e a)	 
 -- Monoid e => Monoid (Validation e a)Source
 -- Semigroup e => Applicative (Validation e)	 
+-- (Ord a, Ord e) => Ord (Validation e a)
 
+---- To be done
 -- Traversable (Validation e)
 -- Bitraversable Validation	 
 
--- (Ord a, Ord e) => Ord (Validation e a)
 -- (Eq a, Eq e) => Eq (Validation e a)	 
 -- (Show a, Show e) => Show (Validation e a)	 
