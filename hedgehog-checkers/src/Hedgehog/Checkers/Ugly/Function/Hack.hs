@@ -38,4 +38,10 @@ ordFuncWtf gena genb = do
   -- forAllWith funcShow $ ordFuncWtf' gena genb
   funcForAllWtf $ ordFuncWtf' gena genb
 
+liftedFunctionWtf :: (Functor f, Show (f z), Ord a, Monad m)
+                  => Gen (f z) -> Gen a -> Gen b -> PropertyT m (f (a -> b))
+liftedFunctionWtf gen gena genb = do
+  fab' <- ordFuncWtf gena genb
+  fmap (const fab') <$> forAll gen
+
 ---------- ^^^^^ CANCER PLEASE IGNORE ^^^^^  -----------------------------
