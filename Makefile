@@ -7,5 +7,9 @@ build:
 test:
 	$(stack) test
 
+upload:
+	$(stack) upload hedgehog-checkers
+	$(stack) upload hedgehog-checkers-lens
+
 .PHONY : build test
 

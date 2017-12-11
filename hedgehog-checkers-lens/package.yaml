@@ -6,6 +6,7 @@ author:              Chris Allen
 maintainer:          cma@bitemyapp.com
 copyright:           2017, Chris Allen
 category:            Web
+description:         hedgehog-checkers-lens provides the various lens, prism, setter, and traversal laws as ready-to-use properties.
 extra-source-files:
 - README.md
 

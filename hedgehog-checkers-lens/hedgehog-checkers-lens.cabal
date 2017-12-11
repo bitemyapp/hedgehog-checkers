@@ -4,6 +4,7 @@
 
 name:           hedgehog-checkers-lens
 version:        0.1.0.0
+description:    hedgehog-checkers-lens provides the various lens, prism, setter, and traversal laws as ready-to-use properties.
 category:       Web
 homepage:       https://github.com/bitemyapp/hedgehog-checkers#readme
 author:         Chris Allen
