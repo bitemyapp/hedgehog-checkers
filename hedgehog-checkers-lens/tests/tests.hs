@@ -6,7 +6,6 @@ module Main where
 import           Data.Functor (void)
 
 import           Control.Lens
-import           Control.Lens.TH
 
 import Hedgehog
 import qualified Hedgehog.Gen as Gen
@@ -42,9 +41,9 @@ allLensLawsFoo :: Property
 allLensLawsFoo = property $ do
   let string = Gen.string (Range.linear 0 100) Gen.ascii
       int = Gen.int (Range.linear 0 100)
-  isLens bar int genFoo
-  isLens baz int genFoo
-  isLens dunno string genFoo
+  isLens bar int genFoo (ordFuncWtf' int int)
+  isLens baz int genFoo (ordFuncWtf' int int)
+  isLens dunno string genFoo (ordFuncWtf' string string)
 
 main :: IO ()
 main = do
