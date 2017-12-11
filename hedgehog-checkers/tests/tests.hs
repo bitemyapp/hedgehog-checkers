@@ -99,6 +99,12 @@ maybeApplicativeApply :: Property
 maybeApplicativeApply = property $
   applicativeApplyAgreement genMaybe genSum genSum
 
+intOrd :: Property
+intOrd = property $
+  ord genInt varyGenInt
+  where varyGenInt i =
+          Gen.int (Range.linear i maxBound)
+
 main :: IO ()
 main = do
   e <-
@@ -120,4 +126,8 @@ main = do
                          , ("Applicative", maybeApplicative)
                          , ("ApplicativeApply", maybeApplicativeApply)
                          ]
-  unless (and [e,m]) exitFailure
+  o <-
+    checkParallel $
+      Group "Ord" [ ("Int", intOrd)
+                  ]
+  unless (and [e,m,o]) exitFailure

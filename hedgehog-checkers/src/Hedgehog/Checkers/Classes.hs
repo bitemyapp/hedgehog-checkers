@@ -4,7 +4,8 @@
 module Hedgehog.Checkers.Classes
   (
   -- | Classes
-    alt
+    ord
+  , alt
   , alternative
   , alternativeAltAgreement
   , bifunctor
@@ -28,13 +29,15 @@ import qualified Hedgehog.Range as Range
 import Hedgehog.Checkers.Properties
 import Hedgehog.Checkers.Ugly.Function.Hack
 
--- | Total ordering
+-- | Total ordering, genf (a -> Gen a) should
+--   always return a value equal to or higher
+--   than its input.
 ord :: forall a. (Eq a, Ord a, Show a)
-    => (a -> Gen a) -> PropertyT IO ()
-ord gen = do
-  reflexive rel gen
-  transitive rel gen
-  antiSymmetric rel gen
+    => Gen a -> (a -> Gen a) -> PropertyT IO ()
+ord gena genf = do
+  reflexive rel gena
+  transitive rel gena genf
+  antiSymmetric rel gena genf
   where
     rel = (<=)
 

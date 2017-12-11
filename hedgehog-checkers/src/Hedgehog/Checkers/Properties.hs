@@ -80,14 +80,14 @@ transitive rel gena genf = do
   a <- forAll gena
   b <- forAll (genf a)
   c <- forAll (genf b)
-  (rel a b) && (rel b c) === (rel a c)
+  ((rel a b) && (rel b c)) === (rel a c)
 
 symmetric :: (Show a)
           => (a -> a -> Bool)
           -> Gen a
           -> (a -> Gen a)
           -> PropertyT IO ()
-symmetric f gena genf = do
+symmetric rel gena genf = do
   a <- forAll gena
   b <- forAll (genf a)
   (rel a b) === (rel b a)
@@ -97,7 +97,7 @@ antiSymmetric :: (Eq a, Show a)
               -> Gen a
               -> (a -> Gen a)
               -> PropertyT IO ()
-antiSymmetric f gena genf = do
+antiSymmetric rel gena genf = do
   a <- forAll gena
   b <- forAll (genf a)
-  (rel a b) && (rel b a) === (a == b)
+  ((rel a b) && (rel b a)) === (a == b)
