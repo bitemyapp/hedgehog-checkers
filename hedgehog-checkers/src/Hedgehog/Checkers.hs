@@ -1,7 +1,29 @@
 module Hedgehog.Checkers
   (
-    module Export
+  -- * Classes
+    ord
+  , alt
+  , alternative
+  , alternativeAltAgreement
+  , bifunctor
+  , functor
+  , semigroup
+  , monoid
+  , apply
+  , applicative
+  , applicativeApplyAgreement
+
+  -- * Laws
+  , identity
+  , leftIdentity
+  , rightIdentity
+  , associativity
+  , commutativity
+  , reflexive
+  , transitive
+  , symmetric
+  , antiSymmetric
   ) where
 
-import Hedgehog.Checkers.Classes as Export
-import Hedgehog.Checkers.Properties as Export
+import Hedgehog.Checkers.Classes
+import Hedgehog.Checkers.Properties
