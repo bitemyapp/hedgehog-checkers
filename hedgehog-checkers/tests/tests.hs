@@ -2,18 +2,16 @@
 
 module Main where
 
-import           Control.Applicative
 import           Control.Monad
 import           Data.Either.Validation
-import           Data.Functor (void)
 import           Data.Monoid (Sum(..))
 import           System.Exit (exitFailure)
 
-import Hedgehog
+import           Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
-import Hedgehog.Checkers
+import           Hedgehog.Checkers
 
 genValidation :: Gen a -> Gen b -> Gen (Validation a b)
 genValidation ga gb = do
