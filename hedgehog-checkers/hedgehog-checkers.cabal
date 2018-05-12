@@ -1,6 +1,8 @@
--- This file has been generated from package.yaml by hpack version 0.18.1.
+-- This file has been generated from package.yaml by hpack version 0.28.2.
 --
 -- see: https://github.com/sol/hpack
+--
+-- hash: d9473e2b2b2334566749ed381599128f7177c37c73091ebc176381ee6124fcf8
 
 name:           hedgehog-checkers
 version:        0.1.0.0
@@ -19,11 +21,11 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >= 4.7 && < 5
-    , hedgehog >= 0.5 && < 0.6
-    , containers >= 0.4 && < 0.6
-    , semigroups >= 0.9 && < 1
-    , semigroupoids >= 5 && < 6
+      base >=4.7 && <5
+    , containers >=0.4 && <0.6
+    , hedgehog >=0.5 && <0.6
+    , semigroupoids >=5 && <6
+    , semigroups >=0.9 && <1
   exposed-modules:
       Hedgehog.Checkers
       Hedgehog.Checkers.Ugly.Function.Hack
@@ -40,8 +42,10 @@ test-suite tests
       tests
   ghc-options: -threaded -Wall -rtsopts -with-rtsopts=-N
   build-depends:
-      base >= 4.7 && < 5
-    , hedgehog >= 0.5 && < 0.6
+      base >=4.7 && <5
+    , either >=5 && <6
+    , hedgehog >=0.5 && <0.6
     , hedgehog-checkers
-    , either >= 4.3.2 && < 5
+  other-modules:
+      Paths_hedgehog_checkers
   default-language: Haskell2010

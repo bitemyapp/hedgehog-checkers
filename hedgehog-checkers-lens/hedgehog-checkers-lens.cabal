@@ -1,6 +1,8 @@
--- This file has been generated from package.yaml by hpack version 0.18.1.
+-- This file has been generated from package.yaml by hpack version 0.28.2.
 --
 -- see: https://github.com/sol/hpack
+--
+-- hash: 6d8a12f17d936f2e4a1c75d0c1e8bfb3a6e4fb9d1654f7c87b59c4ff832b5794
 
 name:           hedgehog-checkers-lens
 version:        0.1.0.0
@@ -14,7 +16,6 @@ license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
 cabal-version:  >= 1.10
-
 extra-source-files:
     README.md
 
@@ -22,10 +23,10 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >= 4.7 && < 5
-    , hedgehog >= 0.5 && < 0.6
+      base >=4.7 && <5
+    , hedgehog >=0.5 && <0.6
     , hedgehog-checkers
-    , lens >= 4 && < 5
+    , lens >=4 && <5
   exposed-modules:
       Hedgehog.Checkers.Lens.Properties
   other-modules:
@@ -39,9 +40,11 @@ test-suite tests
       tests
   ghc-options: -threaded -Wall -rtsopts -with-rtsopts=-N
   build-depends:
-      base >= 4.7 && < 5
-    , hedgehog >= 0.5 && < 0.6
+      base >=4.7 && <5
+    , hedgehog >=0.5 && <0.6
     , hedgehog-checkers
-    , lens >= 4 && < 5
     , hedgehog-checkers-lens
+    , lens >=4 && <5
+  other-modules:
+      Paths_hedgehog_checkers_lens
   default-language: Haskell2010
